@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform, View, Text } from 'react-native';
 
 import { useFuriPairs } from './hooks';
 
@@ -35,7 +36,20 @@ const textStyle = {
 };
 
 export function Wrapper({ style, ...props }) {
-  return <span lang="ja" style={{ ...wrapperStyle, ...style }} {...props} />;
+  console.log('Wrapper rendered with props:', props);
+  console.log('Wrapper children:', React.Children.toArray(props.children));
+
+  const children = React.Children.map(props.children, (child) => {
+    if (typeof child === 'string') {
+      return <Text>{child}</Text>;
+    }
+    return child;
+  });
+
+  if (Platform.OS === 'web') {
+    return <span lang="ja" style={{ ...wrapperStyle, ...style }}>{children}</span>;
+  }
+  return <View style={{ ...wrapperStyle, ...style }}>{children}</View>;
 }
 
 export function Pair({ style, ...props }) {
