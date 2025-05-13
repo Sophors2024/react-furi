@@ -36,6 +36,7 @@ const textStyle = {
 };
 
 export function Wrapper({ style, ...props }) {
+  return <span lang="ja" style={{ ...wrapperStyle, ...style }} {...props} />;
   console.log('Wrapper rendered with props:', props);
   console.log('Wrapper children:', React.Children.toArray(props.children));
 
